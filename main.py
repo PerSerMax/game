@@ -4,10 +4,10 @@ import math
 import random
 
 # Определяем размеры экрана
-SCREEN_WIDTH = 800 #ПИСИК У МАКСИМА В ПОПЕ
+SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 # Определяем цвета
-WHITE = (255, 255, 255) #максим альтушка
+WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 
@@ -75,7 +75,53 @@ def game():
 
     while True:
 
-        if ticks % 20www
+        if ticks % 20 == 0:
+            direction = random.randint(0, 8)
+        if direction == 0:
+            enemy.move(5, 0)
+        if direction == 1:
+            enemy.move(0, 5)
+        if direction == 2:
+            enemy.move(-5, 0)
+        if direction == 3:
+            enemy.move(0, -5)
+        if direction == 4:
+            enemy.move(5, 5)
+        if direction == 5:
+            enemy.move(-5, -5)
+        if direction == 6:
+            enemy.move(5, -5)
+        if direction == 7:
+            enemy.move(-5, 5)
+
+        if random.randint(0, 3) == 1:
+            b_x = enemy.rect.centerx
+            b_y = enemy.rect.centery
+            dx = player.rect.centerx - b_x
+            dy = player.rect.centery - b_y
+            angle = math.atan2(-dy, dx) + (random.random() - 0.5)*3.14
+            b_x += math.cos(angle) * 35
+            b_y -= math.sin(angle) * 35
+            bullets.append(Bullet(b_x, b_y, math.degrees(angle)))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Левая кнопка мыши
+                    # Создаем пулю, направленную от игрока к позиции мыши
+                    mouse_x, mouse_y = pygame.mouse.get_pos()
+                    b_x = player.rect.centerx
+                    b_y = player.rect.centery
+                    dx = mouse_x - b_x
+                    dy = mouse_y - b_y
+                    angle = math.atan2(-dy, dx)
+                    b_x += math.cos(angle)*35
+                    b_y -= math.sin(angle)*35
+                    bullets.append(Bullet(b_x, b_y, math.degrees(angle)))
+
+        # Получаем состояние клавиш
+        keys = pygame.key.get_pressed()
 
         # Обрабатываем нажатия клавиш и перемещаем персонажа
         if keys[pygame.K_w]:
@@ -99,7 +145,7 @@ def game():
             bullet.move()
             bullet.draw(screen)
 
-            # Проверяем столкновение с игрокомw
+            # Проверяем столкновение с игроком
             if bullet.rect.colliderect(player.rect):
                 enemy_hits += 1
                 # Дополнительная обработка, например, уменьшение здоровья и т.д.
