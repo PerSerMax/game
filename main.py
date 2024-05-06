@@ -4,10 +4,10 @@ import math
 import random
 
 # Определяем размеры экрана
-SCREEN_WIDTH = 800
+SCREEN_WIDTH = 800 #ПИСИК У МАКСИМА В ПОПЕ
 SCREEN_HEIGHT = 600
 # Определяем цвета
-WHITE = (255, 255, 255)
+WHITE = (255, 255, 255) #максим альтушка
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 
