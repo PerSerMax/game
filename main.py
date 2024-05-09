@@ -4,8 +4,8 @@ import math
 import random
 
 # Определяем размеры экрана
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 1000
 # Определяем цвета
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -36,7 +36,7 @@ class Bullet:
         self.rect = pygame.Rect(x, y, 5, 5)
         self.color = RED
         self.angle = angle
-        self.speed = 10
+        self.speed = 8
         self.dx = math.cos(math.radians(self.angle)) * self.speed
         self.dy = -math.sin(math.radians(self.angle)) * self.speed
 
@@ -72,34 +72,37 @@ def game():
 
     clock = pygame.time.Clock()
 
+    speed = 5
+    direction = 0
+
 
     while True:
 
-        if ticks % 20 == 0:
+        if ticks % 10 == random.randint(0, 10):
             direction = random.randint(0, 8)
         if direction == 0:
-            enemy.move(5, 0)
+            enemy.move(speed, 0)
         if direction == 1:
-            enemy.move(0, 5)
+            enemy.move(0, speed)
         if direction == 2:
-            enemy.move(-5, 0)
+            enemy.move(-speed, 0)
         if direction == 3:
-            enemy.move(0, -5)
+            enemy.move(0, -speed)
         if direction == 4:
-            enemy.move(5, 5)
+            enemy.move(speed, speed)
         if direction == 5:
-            enemy.move(-5, -5)
+            enemy.move(-speed, -speed)
         if direction == 6:
-            enemy.move(5, -5)
+            enemy.move(speed, -speed)
         if direction == 7:
-            enemy.move(-5, 5)
+            enemy.move(-speed, speed)
 
         if random.randint(0, 3) == 1:
             b_x = enemy.rect.centerx
             b_y = enemy.rect.centery
             dx = player.rect.centerx - b_x
             dy = player.rect.centery - b_y
-            angle = math.atan2(-dy, dx) + (random.random() - 0.5)*3.14
+            angle = math.atan2(-dy, dx) + (random.random() - 0.5)*1
             b_x += math.cos(angle) * 35
             b_y -= math.sin(angle) * 35
             bullets.append(Bullet(b_x, b_y, math.degrees(angle)))
@@ -174,7 +177,6 @@ def game():
 
         clock.tick(60)
         ticks += 1
-
 
 
 if __name__ == "__main__":
