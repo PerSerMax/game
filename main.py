@@ -4,8 +4,8 @@ import math
 import random
 
 # Определяем размеры экрана
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 1000
+SCREEN_WIDTH = 500
+SCREEN_HEIGHT = 500
 # Определяем цвета
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -49,6 +49,7 @@ class Bullet:
         # Рисуем пулю на экране
         pygame.draw.rect(screen, self.color, self.rect)
 
+
 def game():
     ticks = 0
 
@@ -77,7 +78,6 @@ def game():
 
 
     while True:
-
         if ticks % 10 == random.randint(0, 10):
             direction = random.randint(0, 8)
         if direction == 0:
@@ -97,12 +97,12 @@ def game():
         if direction == 7:
             enemy.move(-speed, speed)
 
-        if random.randint(0, 3) == 1:
+        if random.randint(0, 30) == 1:
             b_x = enemy.rect.centerx
             b_y = enemy.rect.centery
             dx = player.rect.centerx - b_x
             dy = player.rect.centery - b_y
-            angle = math.atan2(-dy, dx) + (random.random() - 0.5)*1
+            angle = math.atan2(-dy, dx) + (random.random() - 0.5)*0.2
             b_x += math.cos(angle) * 35
             b_y -= math.sin(angle) * 35
             bullets.append(Bullet(b_x, b_y, math.degrees(angle)))
@@ -142,6 +142,7 @@ def game():
         # Рисуем персонажей
         player.draw(screen)
         enemy.draw(screen)
+        
 
         # Обновляем пули и проверяем столкновения
         for bullet in bullets:
